@@ -2,7 +2,7 @@
 import path from "path";
 import os from "os";
 import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import cloudinary from "cloudinary";
 import Recording from "../models/fileModel";
 
@@ -13,40 +13,47 @@ cloudinary.config({
 });
 
 async function saveFileToLocal(formData) {
-  const file = formData.get("file");
+  const file = formData.get("audio");
+
+  console.log(file);
 
   const bufferPromise = file.arrayBuffer().then((data) => {
     const buffer = Buffer.from(data);
-    const name = uuidv4();
+    // const name = uuidv4();
     const ext = file.type.split("/")[1];
 
     const tempdir = os.tmpdir();
-    const uploadDir = path.join(tempdir, `/${name}.${ext}`);
+    // const uploadDir = path.join(tempdir, `/${name}.${ext}`);
+    //const uploadDir = path.join(process.cwd(), "public", `/${file.name}$`);
+    const filePath = path.join(__dirname, file.name);
 
-    fs.writeFile(uploadDir, buffer);
+    fs.writeFile(filePath, buffer, (err) => err && console.error(err));
 
-    return { filepath: uploadDir, filename: file.name };
+    return { filepath: filePath, filename: file.name };
   });
 
-  return await Promise(bufferPromise);
+  return bufferPromise;
 }
 
-async function uploadFileToCloudinary(newFile) {
-  const promise = cloudinary.v2.uploader.upload(newFile.filepath, {
+async function uploadFileToCloudinary() {
+  const filePath = path.join(__dirname, "test.wav");
+  const promise = cloudinary.v2.uploader.upload(filePath, {
     folder: "voice-recordings",
     resource_type: "raw",
   });
 
   console.log(promise);
 
-  return await Promise(promise);
+  return promise;
 }
 
 export async function uploadFile(formData) {
   try {
     const newFile = await saveFileToLocal(formData);
 
-    const file = await uploadFileToCloudinary(newFile);
+    const file = await uploadFileToCloudinary();
+
+    console.log("hello");
 
     fs.unlink(newFile.filepath);
 
