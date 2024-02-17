@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { AudioRecorder } from "react-audio-voice-recorder";
-import { uploadFile } from "../../actions/uploadAction";
+import { uploadFile } from "@/actions/uploadAction";
 
 export default function VoiceRecorder() {
   return (
@@ -15,12 +15,12 @@ export default function VoiceRecorder() {
 }
 
 function RecorderWithRouter() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const addAudioElement = async (blob: Blob) => {
     const formData = new FormData();
     formData.append("audio", blob);
-
+    console.log(formData)
     try {
       // const response = await fetch("/api/save-audio", {
       //   method: "POST",

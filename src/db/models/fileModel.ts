@@ -8,6 +8,6 @@ const recordingSchema = new Schema(
   { timestamps: true }
 );
 
-const Recording = models.reordings || model("recordings", recordingSchema);
+const Recording = models.Recording || model("recordings", recordingSchema);
 
 export default Recording;
