@@ -42,7 +42,7 @@ async function uploadFileToCloudinary(newFile) {
   return await Promise(promise);
 }
 
-async function uploadFile(formData) {
+export async function uploadFile(formData) {
   try {
     const newFile = await saveFileToLocal(formData);
 
