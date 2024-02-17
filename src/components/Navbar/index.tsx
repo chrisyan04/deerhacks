@@ -3,16 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
 import logo from "@/public/next.svg";
 import "./Navbar.css";
 
 export interface Link {
   title: string;
   href: string;
+  disabled?: boolean;
 }
 
-export default function NavBar({ links }: { links: Link[] }) {
+type NavbarProps = {
+  links: Link[];
+  isLoggedIn?: boolean;
+};
+
+export default function NavBar({ links, isLoggedIn }: NavbarProps) {
   const [toggle, setToggle] = useState<boolean>(false);
 
   return (
@@ -22,54 +27,86 @@ export default function NavBar({ links }: { links: Link[] }) {
         "h-full pb-[calc(100vh-5em)] transition duration-1000 ease-in-out md:h-auto md:pb-0 md:transition-none portrait:h-auto"
       }`}
     >
-      <a href="/#intro" tabIndex={0}>
-        <Image priority src={logo} alt="DS3 Logo" />
+      <a href="/" tabIndex={0}>
+        <Image priority src={logo} alt="VoiceRE" />
       </a>
       <nav
         className={`fixed w-full left-0 -top-[100vh] duration-1000 md:static md:w-auto md:duration-0 md:visible ${
           toggle
             ? "h-full visible translate-y-[calc(100vh_+_5em)] transition ease-in-out duration-1000 md:h-auto md:transform-none md:transition-none"
             : "invisible"
-        } `}
+        }`}
       >
         <ul
           className={`mb-0 md:pl-0 flex flex-wrap justify-between items-center ${
             toggle && "active"
           }`}
         >
-          {links.map(({ href, title }: Link, id) => {
-            return (
-              <li
-                className="item block order-3 w-full text-center p-[10px] md:relative md:w-auto"
-                key={id}
-              >
-                {href.includes("#") ? (
-                  <a
-                    className="block text-2xl md:text-lg text-white px-[5px] py-[15px] font-bold"
-                    href={encodeURI(href)}
-                    onClick={() => setToggle(false)}
-                  >
-                    {title}
-                  </a>
-                ) : (
+          {links.map(({ href, title, disabled }: Link, id) => {
+            // Conditionally render based on isLoggedIn
+            if (isLoggedIn && title === "My Account") {
+              return (
+                <li
+                  className="item block order-3 w-full text-center p-[10px] md:relative md:w-auto"
+                  key={id}
+                >
                   <Link
-                    className="block text-2xl md:text-lg text-white px-[5px] py-[15px] font-bold"
+                    className={`block text-2xl md:text-lg text-white px-[5px] py-[15px] font-bold ${
+                      disabled ? "disabled" : ""
+                    }`}
                     href={encodeURI(href)}
                     onClick={() => setToggle(false)}
+                    style={{ opacity: disabled ? 0.5 : 1 }}
                   >
                     {title}
                   </Link>
-                )}
-              </li>
-            );
+                </li>
+              );
+            } else if (!isLoggedIn && title === "Login" && disabled === true) {
+              return (
+                <li
+                  className="item block order-3 w-full text-center p-[10px] md:relative md:w-auto"
+                  key={id}
+                  style={{ pointerEvents: "none" }}
+                >
+                  <Link
+                    className={`block text-2xl md:text-lg text-white px-[5px] py-[15px] font-bold ${
+                      disabled ? "disabled" : ""
+                    }`}
+                    href={encodeURI(href)}
+                    onClick={() => setToggle(false)}
+                    style={{ opacity: disabled ? 0.5 : 1 }}
+                  >
+                    {title}
+                  </Link>
+                </li>
+              );
+            } else {
+              return (
+                <li
+                  className="item block order-3 w-full text-center p-[10px] md:relative md:w-auto"
+                  key={id}
+                >
+                  <Link
+                    className={`block text-2xl md:text-lg text-white px-[5px] py-[15px] font-bold ${
+                      disabled ? "disabled" : ""
+                    }`}
+                    href={encodeURI(href)}
+                    onClick={() => setToggle(false)}
+                    style={{ opacity: disabled ? 0.5 : 1 }}
+                  >
+                    {title}
+                  </Link>
+                </li>
+              );
+            }
           })}
         </ul>
       </nav>
-      {/* <Badge /> */}
       <div
         className={`toggle md:hidden md:pointer-events-none w-[65px] h-[65px] relative mt-[10px] caret-transparent cursor-pointer rotate-0 transition ease-in-out duration-500 motion-reduce:transition-none ${
           toggle && "open"
-        } `}
+        }`}
         onClick={() => setToggle(!toggle)}
       >
         {[...Array(6)].map((_, id) => {
