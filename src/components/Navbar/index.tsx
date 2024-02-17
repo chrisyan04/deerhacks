@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import logo from "@/public/next.svg";
+import logo from "@/public/VR.webp";
 import "./Navbar.css";
 
 export interface Link {
@@ -28,7 +28,9 @@ export default function NavBar({ links, isLoggedIn }: NavbarProps) {
       }`}
     >
       <a href="/" tabIndex={0}>
-        <Image priority src={logo} alt="VoiceRE" />
+        <Image priority src={logo} alt="VoiceRE"
+        style={{ maxWidth: '100px', height: 'auto', borderRadius: '10px'}}
+        />
       </a>
       <nav
         className={`fixed w-full left-0 -top-[100vh] duration-1000 md:static md:w-auto md:duration-0 md:visible ${
