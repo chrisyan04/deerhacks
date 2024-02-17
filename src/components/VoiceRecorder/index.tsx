@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { AudioRecorder } from "react-audio-voice-recorder";
+import { uploadFile } from "../../actions/uploadAction";
 
 export default function VoiceRecorder() {
   return (
@@ -21,19 +22,21 @@ function RecorderWithRouter() {
     formData.append("audio", blob);
 
     try {
-      const response = await fetch("/api/save-audio", {
-        method: "POST",
-        body: formData,
-      });
+      // const response = await fetch("/api/save-audio", {
+      //   method: "POST",
+      //   body: formData,
+      // });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Audio file saved on the server-side:", data.fileName);
-        // Redirect or do something else with the saved file
-        router.push(`/audio/${data.fileName}`);
-      } else {
-        console.error("Failed to save audio file on the server-side");
-      }
+      const res = await uploadFile(formData);
+
+      // if (res.ok) {
+      //   const data = await res.json();
+      //   console.log("Audio file saved on the server-side:", data.fileName);
+      //   // Redirect or do something else with the saved file
+      //   router.push(`/audio/${data.fileName}`);
+      // } else {
+      //   console.error("Failed to save audio file on the server-side");
+      // }
     } catch (error) {
       console.error("Error while saving audio file on the server-side", error);
     }
