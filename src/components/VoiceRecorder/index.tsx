@@ -18,17 +18,22 @@ function RecorderWithRouter() {
   // const router = useRouter();
 
   const addAudioElement = async (blob: Blob) => {
+    const file = new File([blob], "test.wav");
     const formData = new FormData();
+<<<<<<< HEAD
     formData.append("audio", blob);
     console.log(formData)
+=======
+    formData.append("audio", file);
+    console.log(formData.get("audio"));
+
+>>>>>>> 5e2553bbea996c91379efd3e8f773899565383d4
     try {
       // const response = await fetch("/api/save-audio", {
       //   method: "POST",
       //   body: formData,
       // });
-
       const res = await uploadFile(formData);
-
       // if (res.ok) {
       //   const data = await res.json();
       //   console.log("Audio file saved on the server-side:", data.fileName);
