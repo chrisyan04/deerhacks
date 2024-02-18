@@ -1,6 +1,7 @@
 import Navbar, { type Link } from "@/components/Navbar";
 import VoiceRecorder from "@/components/VoiceRecorder";
 
+
 const links: Link[] = [
   { title: "Home", href: "/" },
   { title: "Product", href: "/product" },
@@ -20,3 +21,4 @@ export default function Home() {
     </>
   );
 }
+
