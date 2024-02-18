@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface ITopics {
   email: string,
@@ -26,6 +26,6 @@ const topicSchema = new Schema<ITopics>(
   }
 );
 
-const Topics = mongoose.models.Topics || model("topics", topicSchema);
+const Topics = mongoose.models.Topics || mongoose.model("Topics", topicSchema);
 
 export default Topics;

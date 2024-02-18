@@ -1,8 +1,8 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
-};
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   experimental: {
+//     serverActions: true,
+//   },
+// };
 
-export default nextConfig;
+// export default nextConfig;
