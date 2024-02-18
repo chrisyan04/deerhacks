@@ -4,8 +4,8 @@ import os from "os";
 import fs from "fs";
 // import { v4 as uuidv4 } from "uuid";
 import cloudinary from "cloudinary";
-import Recording from "@/models/fileModel";
-import connectDB from "@/db/config";
+import Recording from "../models/fileModel";
+import connectDB from "../db/config";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
