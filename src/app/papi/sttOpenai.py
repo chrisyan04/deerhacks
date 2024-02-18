@@ -5,10 +5,10 @@ import os
 load_dotenv()
 client = OpenAI()
 
-text = "Computer Applications are traditionally Kylie likes to the server and operating system that executes their code for those companies increasingly want to expand computer capabilities while spending less time money and effort and painting and computer infrastructure vendors are offering simplified appointments virtual machines and containers are two approaches that Lucinda standard dependence on physical server first approach has its own set of benefits and uses a virtual machine or VM is a software-based environment running on top of a physical server that mimics the user experience of dedicated Hardware"
+#text = "Computer Applications are traditionally Kylie likes to the server and operating system that executes their code for those companies increasingly want to expand computer capabilities while spending less time money and effort and painting and computer infrastructure vendors are offering simplified appointments virtual machines and containers are two approaches that Lucinda standard dependence on physical server first approach has its own set of benefits and uses a virtual machine or VM is a software-based environment running on top of a physical server that mimics the user experience of dedicated Hardware"
 #text = "How are you doing?"
-
-def buildPrompt(question, text):
+question = "virtualization vs containerization"
+def buildPrompt(question,text):
     prompt =f"""
 I was asked to speak about the following topic/question: {question}
 and in response I said the following (transcript):
@@ -26,16 +26,17 @@ Expect minor typos in the transcript above and try to infer the general idea.
 """
     return prompt
 
+def getQuestions(text):
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role":"system","content":"You are a university-level educational assistant, helping students study topics"},
+            {"role":"user","content":buildPrompt(question,text)}
+        ]
+    )
+    return completion.choices[0].message.content
 
-completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role":"system","content":"You are a university-level educational assistant, helping students study topics"},
-        {"role":"user","content":buildPrompt("Virtualization vs Containerization",text)}
-    ]
-)
 
-
-print(completion.choices[0].message.content)
+#print(completion.choices[0].message.content)
 
 

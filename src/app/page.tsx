@@ -14,7 +14,9 @@ export default function Home() {
     <>
       <Navbar links={links} />
       <main>
+
       </main>
     </>
   );
 }
+

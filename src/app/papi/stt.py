@@ -4,6 +4,11 @@ author: Shrey
 date: 15th August 2023
 '''
 
+import urllib.request
+
+import os
+import ffmpeg
+
 from google.cloud import speech_v1 as stt
 from google.cloud.speech_v1 import types
 
@@ -48,9 +53,17 @@ print("Done")
 #Writing to WAV file
 write("recordedAudio.wav", sampleRate, recordedAudio)
 '''
-def getSTT(file):
+def getSTT(fileURL):
+
+    urllib.request.urlretrieve(fileURL, "src/app/papi/test.mp4")
+
+    command1 = "ffmpeg -i src/app/papi/test.mp4 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav -y"
+    #command2 = "ffmpeg -i src/app/papi/test.mp3 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav"
+    os.system(command1)
+    #os.system(command2)
+
     #Converting into FLAC
-    data, recSampleRate = sf.read("src/app/papi/test.wav")
+    data, recSampleRate = sf.read("src/app/papi/temp.wav")
     sf.write("src/app/papi/recordedAudio.FLAC", data, sampleRate)
 
     '''
@@ -72,7 +85,7 @@ def getSTT(file):
 
     #Finally we get the response
     path = r"src/app/papi/recordedAudio.FLAC"
-    sttresponse = ""
+    sttresponse = "+++"
     with io.open(path, "rb") as audio_file:
         data = audio_file.read()
         audio = types.RecognitionAudio(content=data)
@@ -89,4 +102,5 @@ def getSTT(file):
     print(sttresponse)
     return sttresponse
 
-getSTT("f")
+if __name__ == "__main__":
+    getSTT("https://res.cloudinary.com/dyhkvcl9v/raw/upload/v1708235515/voice-recordings/orhancangurel%40gmail.com-Title.wav")
