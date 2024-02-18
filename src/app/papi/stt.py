@@ -19,7 +19,7 @@ import soundfile as sf
 import io
 
 #Google Authentication
-auth = r"speech_creds.json"
+auth = r"src/app/papi/speech_creds.json"
 client = stt.SpeechClient.from_service_account_json(auth)
 
 
@@ -48,41 +48,45 @@ print("Done")
 #Writing to WAV file
 write("recordedAudio.wav", sampleRate, recordedAudio)
 '''
+def getSTT(file):
+    #Converting into FLAC
+    data, recSampleRate = sf.read("src/app/papi/test.wav")
+    sf.write("src/app/papi/recordedAudio.FLAC", data, sampleRate)
 
-#Converting into FLAC
-data, recSampleRate = sf.read("test.wav")
-sf.write("recordedAudio.FLAC", data, sampleRate)
+    '''
+    Making the config file
+    '''
+    encoding = stt.RecognitionConfig.AudioEncoding.FLAC
+    lang = "en-US"
+    config = {"encoding":encoding,
+            "sample_rate_hertz":sampleRate,
+            "language_code":lang}
 
-'''
-Making the config file
-'''
-encoding = stt.RecognitionConfig.AudioEncoding.FLAC
-lang = "en-US"
-config = {"encoding":encoding,
-        "sample_rate_hertz":sampleRate,
-        "language_code":lang}
+    '''
+    EXTRA:
+    An enumeration: is a set of symbolic names (members)
+    bound to unique values. can be iterated over to return
+    its canonical (i.e. non-alias) members in definition order.
+    Uses call syntax to return members by value.
+    '''
 
-'''
-EXTRA:
-An enumeration: is a set of symbolic names (members)
-bound to unique values. can be iterated over to return
-its canonical (i.e. non-alias) members in definition order.
-Uses call syntax to return members by value.
-'''
+    #Finally we get the response
+    path = r"src/app/papi/recordedAudio.FLAC"
+    sttresponse = ""
+    with io.open(path, "rb") as audio_file:
+        data = audio_file.read()
+        audio = types.RecognitionAudio(content=data)
+        operation = client.long_running_recognize(
+            request={"config": config, "audio": audio}
+        )
+        response = operation.result(timeout=10000)
+        for result in response.results:
+            # First alternative is the most probable result
+            alternative = result.alternatives[0]
+            sttresponse += alternative.transcript
+            #print(f"Transcript: {alternative.transcript}")
+        #response = client.recognize(config, audio)
+    print(sttresponse)
+    return sttresponse
 
-#Finally we get the response
-path = r"recordedAudio.FLAC"
-with io.open(path, "rb") as audio_file:
-    data = audio_file.read()
-    audio = types.RecognitionAudio(content=data)
-    operation = client.long_running_recognize(
-        request={"config": config, "audio": audio}
-    )
-    response = operation.result(timeout=10000)
-    for result in response.results:
-        # First alternative is the most probable result
-        alternative = result.alternatives[0]
-        print(f"Transcript: {alternative.transcript}")
-    #response = client.recognize(config, audio)
-
-    print(response)
+getSTT("f")
