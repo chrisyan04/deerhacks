@@ -1,7 +1,7 @@
 'use client'
 
-import Navbar, { type Link } from "@/components/Navbar";
-import Settings from "@/components/Settings";
+import Navbar, { type Link } from "../../components/Navbar";
+import Settings from "../../components/Settings";
 import { useUser } from "@auth0/nextjs-auth0/client"
 
 const links: Link[] = [

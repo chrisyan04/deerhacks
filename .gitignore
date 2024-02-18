@@ -28,6 +28,11 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# flask env files
+src/app/papi/venv
+src/app/papi/.env
+src/app/papi/speech_creds.json
+
 # vercel
 .vercel
 

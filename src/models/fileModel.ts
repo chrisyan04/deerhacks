@@ -51,6 +51,6 @@ const recordingSchema = new Schema<IRecordings>(
   }
 );
 
-const Recording = models.Recording || model("recordings", recordingSchema);
+const Recording = models.Recording || model("Recordings", recordingSchema);
 
 export default Recording;
