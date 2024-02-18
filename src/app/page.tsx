@@ -1,4 +1,5 @@
 import Navbar, { type Link } from "@/components/Navbar";
+import VoiceRecorder from "@/components/VoiceRecorder";
 
 const links: Link[] = [
   { title: "Home", href: "/" },
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Navbar links={links} />
       <main>
+        <VoiceRecorder />
       </main>
     </>
   );
