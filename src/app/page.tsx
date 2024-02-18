@@ -3,7 +3,6 @@ import RecorderForm from "../components/RecorderForm";
 
 const links: Link[] = [
   { title: "Home", href: "/" },
-  { title: "Product", href: "/product" },
   { title: "About", href: "/about" },
   { title: "Team", href: "/team" },
   { title: "Settings", href: "/settings" },

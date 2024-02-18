@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/db/config";
-import Topics, { ITopics } from "@/models/topics";
+import connectDB from "../../../db/config";
+import Topics, { ITopics } from "../../../models/topics";
 import { getSession } from "@auth0/nextjs-auth0";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

@@ -36,7 +36,7 @@ async function saveFileToLocal(formData) {
   return bufferPromise;
 }
 
-async function uploadFileToCloudinary(email, title) {
+function uploadFileToCloudinary(email, title) {
   const filePath = path.join(__dirname, "test.wav");
   const promise = cloudinary.v2.uploader.upload(filePath, {
     folder: "voice-recordings",
@@ -51,11 +51,12 @@ async function uploadFileToCloudinary(email, title) {
 
 export async function uploadFile(formData, email, title, topic) {
   try {
-    connectDB();
+    await connectDB();
     const newFile = await saveFileToLocal(formData);
 
     const file = await uploadFileToCloudinary(email, title);
-
+    console.log(file.url);
+    console.log(file);
     fs.unlink(newFile.filepath, (err) => {
       if (err) {
         console.error(err);
@@ -76,7 +77,7 @@ export async function uploadFile(formData, email, title, topic) {
 
     await Recording.create(newRecording);
 
-    return file.secure_url;
+    return file.secure_url.toString();
   } catch (error) {
     return { errMsg: error.message };
   }

@@ -68,7 +68,7 @@ export default function RecorderForm() {
       const formData = new FormData();
       formData.append("audio", file);
       const resurl = await uploadFile(formData, user?.email, title, topic);
-
+      console.log("the url: " + resurl)
       questions = await fetch("http://localhost:5328/papi/stt/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

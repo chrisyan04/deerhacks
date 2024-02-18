@@ -44,13 +44,13 @@ const recordingSchema = new Schema<IRecordings>(
       unique: true,
       index: true,
       trim: true,
-    },
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const Recording = models.Recording || model("Recordings", recordingSchema);
+const Recording = models.Recording || model("Recording", recordingSchema);
 
 export default Recording;

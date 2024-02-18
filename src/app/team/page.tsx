@@ -2,8 +2,8 @@
 
 import Navbar, { type Link } from "../../components/Navbar";
 import { useUser } from "@auth0/nextjs-auth0/client"
-import Image from "next/image";
-import ourTeam from "../../public/team1.jpg"
+import Image from "next/image"
+import ourTeam from "../../public/team1.jpeg"
 
 const links: Link[] = [
   { title: "Home", href: "/" },
