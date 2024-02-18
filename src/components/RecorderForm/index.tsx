@@ -150,6 +150,7 @@ export default function RecorderForm() {
           Submit
         </button>
       </form>
+      <input disabled type="text"></input>
     </div>
   );
 }
