@@ -1,11 +1,30 @@
 import { Schema, model, models } from "mongoose";
 
-const recordingSchema = new Schema(
+export interface IRecordings {
+  public_id: string;
+  secure_url: string;
+}
+
+const recordingSchema = new Schema<IRecordings>(
   {
-    public_id: String,
-    secure_url: String,
+    public_id: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+      trim: true,
+    },
+    secure_url: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+      trim: true,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Recording = models.Recording || model("recordings", recordingSchema);
