@@ -1,6 +1,6 @@
 'use client'
 
-import Navbar, { type Link } from "@/components/Navbar";
+import Navbar, { type Link } from "../../components/Navbar";
 import { useUser } from "@auth0/nextjs-auth0/client"
 import Image from "next/image";
 

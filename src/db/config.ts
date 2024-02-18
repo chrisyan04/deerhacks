@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { env } from "@/env/server.mjs";
+import { env } from "../env/server.mjs";
 
 export default async function connectDB() {
   try {

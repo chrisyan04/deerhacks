@@ -1,5 +1,5 @@
-import Navbar, { type Link } from "@/components/Navbar";
-import VoiceRecorder from "@/components/VoiceRecorder";
+import Navbar, { type Link } from "../components/Navbar";
+import VoiceRecorder from "../components/VoiceRecorder";
 
 
 const links: Link[] = [
