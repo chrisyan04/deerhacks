@@ -39,3 +39,5 @@ src/app/papi/speech_creds.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/.expo/
