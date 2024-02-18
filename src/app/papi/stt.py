@@ -29,13 +29,13 @@ client = stt.SpeechClient.from_service_account_json(auth)
 
 
 def getSTT(fileURL):
-
+    
     urllib.request.urlretrieve(fileURL, "src/app/papi/test.mp4")
 
     command1 = "ffmpeg -i src/app/papi/test.mp4 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav -y"
     os.system(command1)
     
-
+    sampleRate = 44100
     #Converting into FLAC
     data, recSampleRate = sf.read("src/app/papi/temp.wav")
     sf.write("src/app/papi/recordedAudio.FLAC", data, sampleRate)

@@ -75,9 +75,11 @@ export async function uploadFile(formData, email, title, topic) {
       topic,
     });
 
+    console.log("the url1: " + file.url)
     await Recording.create(newRecording);
+    console.log("the url2: " + file.url)
 
-    return file.secure_url.toString();
+    return file.url;
   } catch (error) {
     return { errMsg: error.message };
   }
