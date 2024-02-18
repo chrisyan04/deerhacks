@@ -4,7 +4,8 @@ import os from "os";
 import fs from "fs";
 // import { v4 as uuidv4 } from "uuid";
 import cloudinary from "cloudinary";
-import Recording from "../models/fileModel";
+import Recording from "@/models/fileModel";
+import connectDB from "@/db/config";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -49,20 +50,32 @@ async function uploadFileToCloudinary() {
 
 export async function uploadFile(formData) {
   try {
+    connectDB();
     const newFile = await saveFileToLocal(formData);
 
     const file = await uploadFileToCloudinary();
 
+    
+    fs.unlink(newFile.filepath, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File deleted successfully");
+      }
+    });
+    
     console.log("hello");
 
-    fs.unlink(newFile.filepath);
-
     const newRecording = new Recording({
-      puglic_id: recording.public_id,
-      secure_url: recording.secure_url,
+      public_id: file.public_id,
+      secure_url: file.secure_url,
     });
 
-    await Recording.insert(newRecording);
+    console.log(newRecording)
+
+    await Recording.create(newRecording);
+
+    console.log("Recording data added to MongoDB collection");
   } catch (error) {
     return { errMsg: error.message };
   }
