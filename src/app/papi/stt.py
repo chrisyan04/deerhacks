@@ -28,47 +28,19 @@ auth = r"src/app/papi/speech_creds.json"
 client = stt.SpeechClient.from_service_account_json(auth)
 
 
-'''
-For text synthesis/response from google we need the following:
-1) audio (recorded OR audio file BUT in FLAC format)
-2) config (encoding method, sample hertz/sample rate, language code)
-'''
-
-'''
-Getting the audio
-'''
-#To record the audio we will need the following:
-sampleRate = 44100
-recordingDuration = 3
-frames = int(sampleRate*recordingDuration) #totalSamples
-
-'''
-print("Recording")
-recordedAudio = sd.rec(frames, sampleRate, 1)
-sd.wait()
-print("Done")
-
-
-
-#Writing to WAV file
-write("recordedAudio.wav", sampleRate, recordedAudio)
-'''
 def getSTT(fileURL):
 
     urllib.request.urlretrieve(fileURL, "src/app/papi/test.mp4")
 
     command1 = "ffmpeg -i src/app/papi/test.mp4 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav -y"
-    #command2 = "ffmpeg -i src/app/papi/test.mp3 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav"
     os.system(command1)
-    #os.system(command2)
+    
 
     #Converting into FLAC
     data, recSampleRate = sf.read("src/app/papi/temp.wav")
     sf.write("src/app/papi/recordedAudio.FLAC", data, sampleRate)
 
-    '''
-    Making the config file
-    '''
+
     encoding = stt.RecognitionConfig.AudioEncoding.FLAC
     lang = "en-US"
     config = {"encoding":encoding,
