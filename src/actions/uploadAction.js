@@ -37,6 +37,7 @@ async function saveFileToLocal(formData) {
 }
 
 async function uploadFileToCloudinary() {
+  'use client'
   const filePath = path.join(__dirname, "test.wav");
   const promise = cloudinary.v2.uploader.upload(filePath, {
     folder: "voice-recordings",
@@ -55,7 +56,6 @@ export async function uploadFile(formData) {
 
     const file = await uploadFileToCloudinary();
 
-    
     fs.unlink(newFile.filepath, (err) => {
       if (err) {
         console.error(err);
@@ -69,6 +69,7 @@ export async function uploadFile(formData) {
     const newRecording = new Recording({
       public_id: file.public_id,
       secure_url: file.secure_url,
+      // email: email,
     });
 
     console.log(newRecording)
