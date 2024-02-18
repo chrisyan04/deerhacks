@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/db/config";
 import Topics, { ITopics } from "@/models/topics";
+import { getSession } from "@auth0/nextjs-auth0";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     connectDB();
 
@@ -32,11 +33,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     connectDB();
 
-    let topics = await Topics.find({});
+    // @ts-ignore
+    const session = await getSession(request);
+    if (!session?.user?.email) {
+      throw new Error("User email not found in session");
+    }
+
+    let topics = await Topics.find({ email: session.user.email });
 
     return NextResponse.json(topics, { status: 200 });
   } catch (error: any) {

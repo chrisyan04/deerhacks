@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -114,7 +114,7 @@ export default function Settings() {
           <div className="dashboard grid grid-cols-2 max-sm:grid-cols-1 topics">
             {topics.map((topic: any, index: number) => (
               <div key={index} className="px-4 flex items-center">
-                <span className="text-xl">{topic.topic}</span>
+                <span className="text-xl mx-3">{topic.topic}</span>
               </div>
             ))}
           </div>
