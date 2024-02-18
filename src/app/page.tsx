@@ -1,4 +1,4 @@
-import Navbar, { type Link } from "@/components/Navbar";
+import Navbar, { type Link } from "../components/Navbar";
 
 const links: Link[] = [
   { title: "Home", href: "/" },
