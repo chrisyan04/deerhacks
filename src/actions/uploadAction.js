@@ -76,7 +76,7 @@ export async function uploadFile(formData, email, title, topic) {
 
     await Recording.create(newRecording);
 
-    console.log("Recording data added to MongoDB collection");
+    return file.secure_url;
   } catch (error) {
     return { errMsg: error.message };
   }

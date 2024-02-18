@@ -61,13 +61,24 @@ export default function RecorderForm() {
     setTitleError("");
     setAudioError("");
     setTopicError("");
-
+    let questions = "";
     // Perform actions with title and audio, for example, send to the server
     try {
       const file = new File([audio], "test.wav");
       const formData = new FormData();
       formData.append("audio", file);
-      const res = await uploadFile(formData, user?.email, title, topic);
+      const resurl = await uploadFile(formData, user?.email, title, topic);
+
+      questions = await fetch("http://localhost:5328/papi/stt/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ln: resurl }),
+      })
+        .then((res) => res.json())
+        .then((body) => {
+          return body;
+        });
+      console.log(questions);
     } catch (error) {
       console.error("Error while saving audio file on the server-side", error);
     }
@@ -150,7 +161,6 @@ export default function RecorderForm() {
           Submit
         </button>
       </form>
-      <input disabled type="text"></input>
     </div>
   );
 }
