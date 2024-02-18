@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
-import AddPopup from "@/components/AddPopup";
+import AddPopup from "../../components/AddPopup";
 import "./Settings.css";
 
 export default function Settings() {
