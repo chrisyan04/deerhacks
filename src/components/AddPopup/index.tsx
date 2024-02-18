@@ -1,10 +1,18 @@
 // Popup component
 import React, { useState } from "react";
 
-const AddPopup = ({ userEmail, onClose, onSubmit }: { userEmail: string; onClose: () => void; onSubmit: (data: { email: string; topic: string }) => void }) => {
+const AddPopup = ({
+  userEmail,
+  onClose,
+  onSubmit,
+}: {
+  userEmail: string;
+  onClose: () => void;
+  onSubmit: (data: { email: string; topic: string }) => void;
+}) => {
   const [topicName, setTopicName] = useState("");
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     onSubmit({ email: userEmail, topic: topicName });
     onClose();

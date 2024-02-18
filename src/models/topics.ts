@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface ITopics {
-  email: string,
-  topic: string,
+  email: string;
+  topic: string;
 }
 
 const topicSchema = new Schema<ITopics>(
@@ -19,7 +19,7 @@ const topicSchema = new Schema<ITopics>(
       unique: true,
       index: true,
       trim: true,
-    }
+    },
   },
   {
     timestamps: true,
