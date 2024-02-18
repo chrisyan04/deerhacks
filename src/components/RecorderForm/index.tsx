@@ -69,16 +69,7 @@ export default function RecorderForm() {
       formData.append("audio", file);
       let resurl = await uploadFile(formData, user?.email, title, topic);
       console.log("the url 28: " + resurl)
-      let questions = fetch("http://localhost:5328/papi/stt/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ln: resurl }),
-      })
-        .then((res) => res.json())
-        .then((body) => {
-          return body;
-        });
-      console.log(questions);
+      
     } catch (error) {
       console.error("Error while saving audio file on the server-side", error);
     }

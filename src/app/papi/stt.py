@@ -22,6 +22,7 @@ from scipy.io.wavfile import write
 import soundfile as sf
 
 import io
+import requests
 
 #Google Authentication
 auth = r"src/app/papi/speech_creds.json"
@@ -31,6 +32,12 @@ client = stt.SpeechClient.from_service_account_json(auth)
 def getSTT(fileURL):
     
     urllib.request.urlretrieve(fileURL, "src/app/papi/test.mp4")
+    '''
+    with open(audio_file, 'wb') as test:
+        resp = requests.get(fileURL)
+        if resp.status_code == 200:
+            test.write(resp.content)
+    '''
 
     command1 = "ffmpeg -i src/app/papi/test.mp4 -ab 160k -ac 1 -ar 44100 -vn src/app/papi/temp.wav -y"
     os.system(command1)
@@ -56,7 +63,7 @@ def getSTT(fileURL):
     '''
 
     #Finally we get the response
-    path = r"src/app/papi/recordedAudio.FLAC"
+    path = "src/app/papi/recordedAudio.FLAC"
     sttresponse = "+++"
     with io.open(path, "rb") as audio_file:
         data = audio_file.read()
