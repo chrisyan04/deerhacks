@@ -1,5 +1,5 @@
-import Navbar, { type Link } from "@/components/Navbar";
-import RecorderForm from "@/components/RecorderForm";
+import Navbar, { type Link } from "../components/Navbar";
+import RecorderForm from "../components/RecorderForm";
 
 const links: Link[] = [
   { title: "Home", href: "/" },
