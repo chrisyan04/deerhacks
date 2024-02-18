@@ -79,7 +79,16 @@ export async function uploadFile(formData, email, title, topic) {
     await Recording.create(newRecording);
     console.log("the url2: " + file.url)
 
-    return file.url;
+    let questions = fetch("http://localhost:5328/papi/stt/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ln: file.url }),
+      })
+        .then((res) => res.json())
+        .then((body) => {
+          return body;
+        });
+      console.log(questions);
   } catch (error) {
     return { errMsg: error.message };
   }

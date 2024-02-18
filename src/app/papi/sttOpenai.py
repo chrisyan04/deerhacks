@@ -7,10 +7,9 @@ client = OpenAI()
 
 #text = "Computer Applications are traditionally Kylie likes to the server and operating system that executes their code for those companies increasingly want to expand computer capabilities while spending less time money and effort and painting and computer infrastructure vendors are offering simplified appointments virtual machines and containers are two approaches that Lucinda standard dependence on physical server first approach has its own set of benefits and uses a virtual machine or VM is a software-based environment running on top of a physical server that mimics the user experience of dedicated Hardware"
 #text = "How are you doing?"
-question = "virtualization vs containerization"
-def buildPrompt(question,text):
+def buildPrompt(text):
     prompt =f"""
-I was asked to speak about the following topic/question: {question}
+I was asked to speak about the a topic/question
 and in response I said the following (transcript):
 {text}
 
@@ -31,7 +30,7 @@ def getQuestions(text):
         model="gpt-3.5-turbo",
         messages=[
             {"role":"system","content":"You are a university-level educational assistant, helping students study topics"},
-            {"role":"user","content":buildPrompt(question,text)}
+            {"role":"user","content":buildPrompt(text)}
         ]
     )
     return completion.choices[0].message.content
