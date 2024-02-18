@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { AudioRecorder } from "react-audio-voice-recorder";
-import { uploadFile } from "@/actions/uploadAction";
+import { uploadFile } from "../../actions/uploadAction";
 // import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function VoiceRecorder() {
